@@ -1,0 +1,247 @@
+CURRENT INSTALLED BUILD: Y2E 4.19 (version code 41), daemon protocol 19 ? 2026-11-22
+Performance and recorder removal:
+- Removed WASD recording buffer, rolling-history writes, F8 save capture and recorder/save/history UI. F8 now follows ordinary mapping behavior. Existing saved captures are preserved; optional live tracker remains independently controlled.
+- Live tracker publishes changed state at most 20Hz (previously ~30Hz). Cursor publication reduced to ~30Hz to match overlay consumption, avoiding ~60Hz file updates for a ~30Hz display. Live data is transient state, not history.
+- Deduplicate app-owned config writes (maps/display/hotkeys/mouse rate) when payload unchanged. Bidirectional mode/control writes remain unconditional. Focus file only rewritten when focus changes.
+- Service caches parsed profiles during sync, avoiding repeated JSON profile parsing throughout overlay polling. Input processing, circular movement, aim settings, selected mouse rate and joystick frequency unchanged.
+- All existing engine behavior checks passed; assembleDebug succeeded. No before/after in-game FPS benchmark available. APK installed on tablet over wireless ADB at 192.168.2.37:39413. Installed version 4.19/code 41 confirmed; trusted daemon restart succeeded and protocol 19 reported running.
+- Likely ongoing costs: high mouse processing rates/touch injection, frequent joystick/aim movement updates, external-file IPC, focus dumpsys polling, fullscreen translucent overlay compositing, optional live tracker. Lower rates/disabled visuals trade responsiveness/diagnostics for lower work.
+
+CURRENT WORKING BUILD: Y2E 4.18 (version code 40), daemon protocol 18 ? 2026-11-20
+Circular edge-preserving movement:
+- Direction transitions now interpolate shortest angular travel and radius, rather than a straight Cartesian chord. Diagonal targets are normalized onto the same configured circular radius as cardinal targets. This intentionally supersedes the square diagonal geometry.
+- Once at the selected radius, normal direction changes keep emitted positions on that radius instead of cutting through the inner walking region. Step limits apply to polar travel and preserve bounds. Walking shortcut deliberately transitions to its smaller configured radius. Near screen edges, coordinate clamping remains a safety limit.
+- Removed W's instant-forward/W-only special case. W now uses the same edge-following transition as all directions. First press still begins at center and moves outward according to transition/frequency/step settings; there is no claim of instantaneous full radius on startup.
+- Existing last-pressed opposite-key priority, one continuous pointer, final release, live tracker and mouse-rate controls remain. Editor/gameplay guides now use circles and normalized diagonal endpoints.
+- Replaced Cartesian overshoot assertions with 64 direction-pair checks for full radius, step caps, one touch and walking-radius bounds; removed obsolete immediate-W check from active runner. Existing engine/aim/timing/tuning checks passed; Gradle build succeeded.
+- Preferred APK updated and installed; engine refreshed/restarted on tablet. CODM sprint/movement behavior not manually verified; screen geometry checks do not prove the reported ranked-game drift is fixed.
+
+CURRENT WORKING BUILD: Y2E 4.17 (version code 39), daemon protocol 17 ? 2026-11-20
+- W forward movement is exempt from transition smoothing: the active forward axis moves to its target on the key event. Returning from W+A/W+D to W-only immediately clears the lateral offset, even with low frequency/small steps.
+- When last-pressed S overrides held W, forward movement stops at neutral immediately and S then uses normal transition controls. Releasing S restores held W immediately. Last-pressed priority remains independent per axis.
+- Sideways and backward transitions retain configured duration/frequency/step controls. No extra pointer, release/recenter or automatic targeting is introduced.
+- Added WImmediateCheck to regression runner: W immediate with 50ms transition/1px steps, W-only lateral cleanup, S transition, restoring W, continuous pointer and final release. All existing engine checks and build passed. Tablet updated, engine refreshed/restarted; actual CODM behavior not manually verified.
+- Frequency recommendation: begin at 60Hz; try 120Hz only if desired and performance remains stable. Higher frequency does not shorten transitions already limited by duration.
+
+CURRENT WORKING BUILD: Y2E 4.16 (version code 38), daemon protocol 16 ? 2026-11-20
+- Restored reliable editor-brand tap behavior by removing toolbar dragging from the Y2E text itself. Tap Y2E opens app; Android's normal long press opens mouse processing choices. Added a separate :: toolbar drag grip.
+- Mouse processing panel also includes an explicit Open Y2E app button.
+- Build succeeded, preferred APK installed and daemon refreshed/restarted. No movement/aim engine changes in this update. Tap/long-press behavior has not been manually exercised on device.
+- Clarification: step range limits distance per movement update; frequency limits update cadence; transition duration is the requested linear-drag duration. Small steps or low frequency can extend actual completion time beyond that duration.
+
+CURRENT WORKING BUILD: Y2E 4.15 (version code 37), daemon protocol 16 ? 2026-11-20
+- Added functional WASD movement tuning: Angle 0?90 degrees, default 45; Frequency 1?120 updates/sec, default 60; Step length min/max 1?100 pixels with default interval 1?50. Step size uses the deterministic midpoint, clamped to the remaining distance, to avoid random speed jitter. Lower frequency/smaller steps can extend total transition time beyond the transition-duration setting.
+- Diagonal angle changes tilt within the square movement range, retaining full equal-axis square diagonals at 45 degrees. Editor properties include a live numeric angle/arc/ray preview; layout and gameplay guides use the selected angle. Unsaved preview is editor-only and event-driven.
+- New tuning version migrates previously ignored legacy tuning values to requested defaults. Profile persistence includes minimum/maximum step range; tune2 wire marker carries runtime parameters. Existing placement, radius, walking shortcut and transition duration remain.
+- Added 250/500/1000 Hz mouse processing choices, default 500. Long-press editor Y2E text or use editor settings to open the choices. Tap still opens app; drag still moves toolbar. These target Y2E event batching intervals of 4/2/1 ms and do not change hardware mouse polling. Actual rate depends on scheduling/input availability; 1000 Hz uses more CPU.
+- Added MovementTuningCheck to engine check runner. Checked multiple angle targets, frequency limits, midpoint step caps, no overshoot and continuous touch; existing engine/aim/transition regressions also passed. Build succeeded; updated APK installed and engine refreshed/restarted.
+- Live angle preview and long-press menu have not been manually exercised on-device; game feel and actual mouse/FPS rates are not benchmarked.
+
+CURRENT WORKING BUILD: Y2E 4.14 (version code 36), daemon protocol 15 ? 2026-11-20
+- Live keys/injected joystick overlay no longer depends on recording. A separate live-enabled control flag is synchronized from the tracker toggle and service startup. Enabling live forces a fresh snapshot even if keys have not changed. Recording/F8 history remain independently gated; panel label distinguishes live-only from recording.
+- Tapping Y2E editor toolbar text opens MainActivity and closes the editor; dragging beyond touch slop still moves the toolbar. App navigation temporarily suppresses capture and pauses mapped touches until app focus is observed (4-second fallback), avoiding capture over the app.
+- Build and existing engine checks passed. Tablet runtime test enabled live with recording disabled, confirmed live snapshot published and rolling history hash unchanged, then enabled live-only mode (recording left off). Live flag restoration used atomic replacement because the app can concurrently replace the control file. Protocol 15 running and overlay foreground service active. Tap/drag UI behavior has not been manually exercised.
+- Preferred APK installed and engine restarted. Joystick movement and aim algorithms were not changed by this update.
+
+CURRENT WORKING BUILD: Y2E 4.13 (version code 35), daemon protocol 14 ? 2026-11-20
+Touch-transition correction attempt based on user clip:
+- Changed the WASD direction interval from a delayed instantaneous coordinate jump to a bounded linear drag over the existing per-profile duration. Setting is now labeled Direction transition (ms); 0 remains instant. Existing configured duration is preserved.
+- Direction changes retarget from the last injected position and advance elapsed movement before retargeting, preventing rapid changes from starving movement. Same endpoint does not restart a running transition. No touch lift/recenter is introduced while any direction remains held.
+- Final release now sends UP at the last injected location, eliminating relocation to center on UP. Last-pressed opposite priority, square targets, walking shortcut and screen bounds remain.
+- Added checks/NoOvershootCheck.java to regression runner. All four diagonal-to-cardinal paths stay monotonic and within their endpoints, preserve vertical position when dropping only a horizontal key, and retain one continuous touch. Existing input, aim and transition-duration checks passed. Build succeeded.
+- This targets a plausible abrupt-touch-motion cause; evidence has not established why CODM interpreted the previous straight coordinates as diagonal. Do not claim the in-game ranked symptom is confirmed fixed until tried.
+- Preferred APK updated/installed and engine restarted on tablet. Tracker remains available for the next reproduction.
+
+CURRENT WORKING BUILD: Y2E 4.12 (version code 34), daemon protocol 13 ? 2026-11-20
+Added optional WASD + joystick tracker:
+- Home-screen button and editor-settings entry open InputTrackerActivity.
+- Record toggle controls the existing Dpad diagnostic flag. Only configured Dpad keys are traced; F8 is reserved while recording and saves a timestamped capture immediately from engine memory plus current state.
+- Bounded recent buffer enlarged to 512 key/touch events; history file writes remain change-driven and capped at 4/sec. Optional live-state file capped at about 30 updates/sec, only when state changes. Added key-state revisions even when coordinates have not changed.
+- Optional gameplay tracker displays held W/S/A/D, injected coordinates, touch down/up and a miniature joystick diagram. Same marker window; no animation loop. F8 capture confirmation is displayed in the panel.
+- Tracker screen offers live history, Save recent history now, and View latest saved capture. Saved files remain in app external files for later inspection; they are separate from the bounded rolling buffer.
+- Tracker explicitly labels Y2E injected state; it cannot observe CODM's actual joystick interpretation. It adds optional diagnostic overhead and can be disabled afterward.
+- Build and existing engine/delay behavior checks passed. APK contents verified to include tracker Activity; tablet startup had no AndroidRuntime crash. Protocol 13 reported running and overlay foreground service active. Tracker UI/F8 flow has not been physically exercised.
+
+CURRENT WORKING BUILD: Y2E 4.11 (version code 33), daemon protocol 12 ? 2026-11-19
+Added a per-profile WASD Direction change delay setting (0?50 ms, default 16 ms), saved in profile JSON and serialized as an optional DPAD field. Existing profiles default to 16 ms. Changing keys or walking radius preserves this setting.
+During the pending interval the existing joystick touch remains down at the previous position. Pending targets coalesce without resetting the next deadline, so rapid key transitions cannot build a backlog or starve movement. Releasing the final direction lifts immediately, per the user's previous requirement.
+No interpolation is added: this is a direction-update delay, not an animation or a guarantee of in-game smoothing. Actual timing is subject to the engine loop and Android scheduling.
+Build, existing engine checks, and targeted 0/8/16/50 ms delay tests passed. Dedicated checks verify continuous touch on overlapping direction changes, partial release, no stale target replay and immediate final release. Tablet APK installed and daemon restarted. In-game feel has not been manually verified.
+
+CURRENT WORKING BUILD: Y2E 4.10 (version code 32), daemon protocol 11 ? 2026-11-19
+The earlier saved ZIP remains an unchanged rollback snapshot. The improvements below supersede its runtime behavior; no new archive is claimed.
+
+Review improvements completed:
+- Joystick lifecycle DOWN/UP events now execute immediately; movement targets coalesce while keeping the earliest pending delivery deadline. Rapid key changes cannot continually restart the delivery delay or erase a short tap. Last-pressed WASD priority and walking hold/toggle remain.
+- Clamp movement center and directional endpoints to valid screen coordinates.
+- Retain configured game identity across transient System UI/IME focus; returning to the same profile no longer reconfigures/resets held input. Genuine profile/config/display changes still reset appropriately. Device-disconnect tracking is preserved across transient focus changes.
+- Boundary aiming carries remaining motion across recentering. Each pass has bounded injection work; excessive remainder drains on following ticks instead of being discarded.
+- Walking shortcut/direction/aim/global shortcut assignment conflict checks added. Numeric release delay shows an error outside 0?2000 ms and blocks Save until valid.
+- Gameplay markers draw a dashed walking-radius range alongside the base square. No extra animation loop added; cursor opacity remains independent.
+- Mouse capture checks reduced from 33 ms to 150 ms; profile names cached for the frequent capture check. Focus dumpsys interval increased from 300 ms to 1000 ms. No FPS measurement was taken.
+- Activation extracts controller from installed APK into a private shell-owned directory. Controller extracts the daemon script from installed APK; daemon loads Package Manager's installed APK rather than the mutable external engine copy. Requested owner-only write permissions for generated files; external-storage permission enforcement remains filesystem-dependent. External state IPC remains scoped app storage, not authenticated IPC.
+- Disabled temporary WASD tracing on tablet to remove optional diagnostics overhead.
+- Added repeatable checks/run-engine-checks.ps1 and checks/ReviewCheck.java covering delivery starvation, short taps/releases, last-pressed restoration, walking radius, screen bounds and aim distance conservation (including large deltas). Checks passed; assembleDebug succeeded.
+- Tablet installation and trusted daemon bootstrap succeeded. Protocol 11 reported running. Shell scripts are LF-normalized with a .gitattributes rule to prevent Windows line-ending breakage.
+- UI interactions and in-game CODM behavior have not been manually verified after this update; do not treat automated checks as evidence the intermittent ranked-game symptom is eliminated.
+
+Historical saved-state notes follow:
+
+CURRENT SAVED SNAPSHOT: 2026-11-19-004615
+Archive: C:\Users\Yugi\Documents\Y2E APK\Y2E-saved-state-2026-11-19-004615-XtMapper-WASD.zip
+App: Y2E 4.9 (version code 31), Y2E-compact-debug.apk.
+WASD: XtMapper-derived handler with square diagonals; last-pressed opposite key wins independently on each axis, and releasing it restores the still-held opposite key. Superseded delayed movement is cancelled.
+Walking: radius shortcut with hold/toggle mode and adjustable offset restored.
+Aim: latest opposite-key/walking change did not modify aim behavior or settings. Aim and movement retain separate touch identities through the shared injector.
+Validation: latest build and opposite-key/walking Java checks passed; no new in-game verification performed for this save.
+This snapshot supersedes the historical entries below where behavior differs. Contains source/configuration/APK; tablet profile data is not included.
+
+Y2E saved state
+
+Saved: 2026-11-18
+
+Current preferred build: Y2E 4.9 (version code 31), built as Y2E-compact-debug.apk and installed on tablet 2405CRPFDC over wireless ADB (192.168.2.37:39975).
+Installed daemon protocol: 10, freshly restarted from the current APK; the Y2E foreground overlay service is active.
+Source project: C:\Users\Yugi\Documents\Y2E APK\Y2E-best-state-2026-11-16
+
+Input engine and Dpad:
+- Ordinary mapped keys each own an independent device:key touch pointer.
+- Dpad · WASD starts at the virtual stick center, holds for 12 ms, then moves one finger to the normalized direction from simultaneously held keys. Supports radius, release delay, change-radius shortcut/offset/hold-or-toggle, diagonal angle, movement frequency, and step length. When the final direction key is released, the virtual stick returns to center immediately; release delay keeps the neutral touch down before lifting.
+- Dpad directional key-up handling also clears a stale direction if Android reports the release on a different input node. Each key-state change recomputes the combined WASD target and reschedules movement from the latest state.
+- Dpad (Stick) maps a physical gamepad left or right analog stick to an on-screen virtual joystick. Settings include radius, release delay, radius-change shortcut/offset/hold, axis reverse/swap, frequency, step length, and dead zone.
+- Aim mode keeps its camera touch down until aim is disabled instead of releasing it after 140 ms idle. Mouse deltas are combined into one aim update per engine frame; unchanged touch coordinates do not emit redundant moves.
+- Gamepad axis ranges are read from getevent capabilities where available.
+- When a keyboard or mouse disappears while keys are held, or a gamepad disconnects, the input engine cancels simulated touches to prevent stuck movement.
+- Legacy saved joystick layouts migrate to four ordinary directional key mappings.
+
+Editor and overlay:
+- Editor toolbar and controls use a compact dark/purple style with aligned button sizes and spacing. Dialogs wrap to their content; long forms scroll within a height cap based on the tablet display.
+- Gameplay overlay shows the base radius and dashed radius-offset guide for visible Dpad and Dpad (Stick) controls.
+- Static gameplay markers use one cached layer; cursor motion invalidates only the old and new cursor regions, rate-limited to about 30 updates/second. Marker and radius drawing is skipped outside the damaged canvas region. Radius preview redraws only during edits.
+- Ctrl+Q is the overlay visibility shortcut. Its handler is separate from keyboard mode, so Q is only reserved by Alt+Q when Alt is held.
+- While the overlay is hidden, the floating editor button and gameplay markers are hidden in normal mapping mode.
+- Keyboard mode removes the marker layer, including the purple cursor and key labels. It releases mouse capture so Android's native pointer and physical keyboard remain available to the game; the black system cursor remains visible in this mode.
+- Alt+Q toggles keyboard mode. Long-press the floating Y2E button for 650 ms to toggle it; tap the KB button to restore normal mapping mode.
+- Replacing the APK does not refresh the separate shell input daemon automatically. Refresh `y2e-engine.apk` and restart `daemon_control.sh` after daemon code changes; the current tablet daemon has been refreshed and restarted.
+
+Performance:
+- Radius drawings have no animation or polling loop. Gameplay cursor updates invalidate only the cursor region. Keyboard mode removes the marker overlay layer entirely.
+- No before/after FPS benchmark was captured; overlay changes reduce Y2E redraw work but cannot guarantee zero compositor cost.
+
+Input verification:
+- Current tablet config: overlay shortcut KEY_LEFTCTRL|KEY_Q; keyboard mode shortcut KEY_LEFTALT|KEY_Q.
+- Build/install and daemon restart succeeded on 2026-11-18. The Ctrl+Q shortcut has not been physically pressed on the tablet since this restart.
+- Latest build includes the WASD stale-release handling, clipped overlay drawing, and steadier aim motion; it is installed with a freshly restarted daemon.
+
+Snapshot contains the source and APK for the preferred build.
+
+Aiming mode update (2026-11-18):
+- Editor settings include Boundary with adjustable radius, Auto Release with release delay, Offset correction, shortcut, and X/Y sensitivity. Fast Turn Protection was removed.
+- Settings are saved per game profile and serialized to the engine map; profiles without the new fields retain safe defaults (Boundary off at 25% radius, Auto Release on at 200 ms, Offset correction off).
+- Runtime behavior: Boundary recenters the virtual aim touch after it reaches the configured circular radius; Auto Release lifts the touch after the configured mouse-idle delay; turning aim off releases immediately; Offset correction recenters when touch resumes after auto-release.
+- Built app-debug APK, copied it to Y2E-compact-debug.apk, installed it on tablet 2405CRPFDC, refreshed y2e-engine.apk, and restarted daemon protocol 10. Tablet status reported running.
+- Build succeeded. Aim behavior has not yet been exercised inside a game on the tablet.
+
+Joystick idle-input fix (2026-11-18):
+- Releasing the final WASD/arrow shortcut moves the active virtual-stick pointer to center immediately. The configured release delay now holds only the neutral center touch before lifting.
+- Rebuilt and installed Y2E-compact-debug.apk on tablet 2405CRPFDC, refreshed y2e-engine.apk, and restarted the daemon. Device status reported running.
+- Build succeeded. No in-game input session was used for manual behavior verification.
+
+Aiming boundary/release update (2026-11-18):
+- Added an adjustable circular Boundary radius, shown in the editor and gameplay overlay and used as the actual recenter threshold.
+- Removed Fast Turn Protection from profile settings and runtime.
+- Auto Release now releases after the configured period without mouse movement; delay is disabled when Auto Release is off. Turning aim off always lifts the virtual touch.
+- Rebuilt and installed Y2E-compact-debug.apk, refreshed y2e-engine.apk, restarted daemon protocol 10; tablet reported running.
+- Build succeeded; aiming was not manually exercised inside a game.
+
+Editor input and live radius preview fix (2026-11-18):
+- Aiming Boundary preview now uses the unsaved candidate radius and redraws only the old/new circle regions while the properties panel is open. Closing the panel clears the preview and restores the saved profile drawing.
+- The editor overlay no longer sets FLAG_ALT_FOCUSABLE_IM, which had prevented Android's device keyboard from serving the Release delay EditText. The touchable editor window now requests IME resize behavior, and the field requests keyboard display after focus is granted.
+- Rebuilt Y2E 4.9 (version code 31) as Y2E-compact-debug.apk, installed it on tablet 2405CRPFDC over wireless ADB, refreshed y2e-engine.apk, and restarted the daemon. It reported protocol 10 and running.
+- Build succeeded. The settings were not manually opened/typed into on the tablet after install.
+- Offset correction behavior: only relevant with Auto Release. Enabled resumes an auto-released aiming touch at the configured aim point; disabled resumes from its last position. With Auto Release off, Offset correction has no effect.
+
+Gameplay cursor opacity isolation (2026-11-18):
+- Gameplay overlay window alpha stays fixed at 75% to preserve Android touch pass-through behavior. The gameplay opacity slider now scales only marker, boundary, and radius-guide drawing colors; the purple in-game cursor is drawn outside that scaling and keeps a consistent appearance.
+- Opacity adjustment does not add a full-screen compositing layer or extra drawing loop.
+- Rebuilt Y2E 4.9 (version code 31) as Y2E-compact-debug.apk, installed it on tablet 2405CRPFDC, refreshed y2e-engine.apk, and restarted the input daemon. It reported protocol 10 and running.
+- Build succeeded. The cursor appearance has not yet been manually compared at multiple opacity settings in-game.
+
+WASD consistency and rendering update (2026-11-18):
+- Repeat events cannot recreate released or reset key presses. WASD releases clear duplicate input-node state for that key.
+- Opposite keys cancel at neutral; releasing one diagonal axis clears it immediately. Direction smoothing cannot travel through an axis opposite to the current held keys. Existing move deadlines are preserved through rapid chord changes.
+- Queued input transitions are drained in bounded batches before movement ticks.
+- Touch injection reuses pointer coordinate/property arrays, skips unchanged moves, and avoids temporary pointer-index lists. Gameplay marker rendering caches appearance settings and the boundary dash pattern, while retaining cursor-region invalidation and constant cursor opacity.
+- Standalone Java check passed 32 chord/order cases including neutral/opposite combinations, intermediate released-axis checks, cross-node releases, delayed repeats, and an independent mapped-key touch. Gradle assembleDebug succeeded.
+- Updated Y2E-compact-debug.apk and installed on tablet 2405CRPFDC; refreshed engine APK and restarted daemon protocol 10. Restored SYSTEM_ALERT_WINDOW app-op from ignore to allow to activate overlay service.
+- No in-game keyboard session or FPS measurement was performed; physical keyboard rollover and actual game behavior still require on-device use.
+
+Quick diagonal tap correction (2026-11-18):
+- WASD state changes now combine before the movement tick instead of injecting intermediate moves for each queued key release.
+- Removed return-to-center drag on neutral/idle release. The pointer lifts at its last position; opposing keys release immediately. Configured release delay now delays lift at that position (45 ms in current CODM profile), so use 0 ms for immediate stop.
+- Standalone Java check passed 16 cases covering four diagonals, both release orders, 0/45 ms delay, absence of release MOVE events, final touch cleanup and delayed repeats.
+- Gradle build succeeded; updated preferred APK and installed on tablet, pushed engine APK and restarted daemon. In-game behavior has not been physically verified.
+
+Diagonal drift follow-up (2026-11-18):
+- Defer dirty WASD updates until EV_SYN/SYN_REPORT completes keyboard reports, with an 8 ms fallback for missing report terminators. Aim/other touch timers continue while awaiting the report.
+- Re-tapping during a pending release now lifts the previous displaced finger and begins a fresh center-down gesture; it no longer reuses the previous diagonal's touch anchor.
+- Optional bounded diagnostic records only configured Dpad direction key transitions (96 entries) and a held/current/target snapshot. Enabled on tablet via y2e-dpad-trace-enabled; writes are change-driven and capped at 4/second.
+- Standalone regression check passed prior 16 diagonal cases plus partial-report suppression and fresh touch on rapid re-tap during a 65 ms release delay. Gradle build succeeded.
+- Physical 25-second getevent capture contained no WASD transitions; the reported in-game symptom has not been reproduced during this session.
+
+Ranked diagonal reversal follow-up (2026-11-18):
+- Retrieved actual ranked-match WASD trace into diagonal-match-trace-2026-11-18.txt. It records real diagonal transitions and releases, but lacks historical touch positions at the reported reversal; root cause remains unconfirmed.
+- Direction vector changes now lift the joystick finger and start a fresh center-down gesture before moving outward. Radius-only changes keep the gesture. This avoids inward/backward drags between diagonal and cardinal positions; direction changes incur the existing 12 ms center initialization.
+- Optional trace now includes revision-driven held/current/target touch snapshots alongside key transitions in the bounded 96-entry buffer. Existing write cap retained.
+- Gradle build and existing quick-tap/report/repeat regression checks passed. Preferred APK refreshed and installed; engine refreshed and restarted. Actual ranked behavior remains to be checked.
+
+Continuous movement rollback (2026-11-18):
+- Removed direction-vector-triggered lift/recenter introduced in the ranked reversal follow-up because the user reported rigid movement and missed movement. W -> W+D -> W now retains one continuous pointer.
+- Retained keyboard report grouping, no return swipe on final release, repeat protection, restart only after an actual idle-release interval, and optional touch/key diagnostics.
+- Gradle build and quick-tap checks passed, including explicit assertion that adding/removing D while W remains held produces no UP/DOWN transitions. Refreshed APK installed and engine restarted on tablet.
+- Respawn preference is awaiting clarification: automatically move while W remains held across spawn, or require release and a fresh W press. No spawn detection has been implemented.
+
+Held movement across spawn (2026-11-18):
+- User selected automatic movement while W remains held across spawn.
+- Stable held Dpad position is resent at most every 50 ms without touch lifts or coordinate changes. Uses a dedicated refresh method because ordinary unchanged moves are deduplicated. Stops after release and does not trigger overlay redraws.
+- Added standalone checks for continued held-position refresh and no refresh after final release; continuous diagonal transition and quick-tap checks also passed. Build succeeded.
+- This maintains continuous held input; Y2E does not inspect CODM spawn state. If CODM requires a fresh DOWN after spawn, its behavior still needs an in-game check.
+
+Simultaneous WASD and editor diagonal guides (2026-11-18):
+- Removed the respawn held-position refresh and its Touch/AndroidTouch method, per user request. No periodic synthetic MOVE is emitted when a held joystick has settled.
+- Retained one joystick pointer with combined WASD vector: perpendicular keys form diagonals, opposite axes cancel, all four held neutralize the pointer. Continuous direction changes do not restart the touch.
+- Editor WASD radius now includes cardinal/diagonal spokes and four diagonal endpoints calculated from the actual Angle setting. Offset radius gets matching directional guides. Editor-only event-driven drawing; gameplay overlay receives no new drawing loop.
+- Standalone Java property check passed all 256 transitions between the 16 held-key combinations, including diagonal signs, all-four/opposing neutral, one-pointer ownership, absence of stationary refresh, and final release cleanup. Gradle build succeeded.
+- Latest trace excerpt showed S+A target down-left and W-only target straight up, without proving the intermittent reported unexpected diagonal. Actual in-game issue remains unconfirmed.
+- Updated preferred APK installed; engine APK refreshed and daemon restarted on tablet. User changed respawn preference to remove automatic held refresh; this supersedes the earlier respawn entry.
+
+Other-touch synchronization fix (2026-11-19):
+- Found a possible event-order gap: dirty WASD correction could remain pending while an unrelated mapped key or mouse event injected a multi-touch snapshot containing old joystick coordinates.
+- Flush latest WASD correction before other mapped key processing, mouse motion, wheel taps and analog-stick events. Keep one continuous Dpad touch; no direction-change resets or stationary refresh.
+- Production wheel path now passes uptime consistently when flushing Dpad timers.
+- Standalone Java checks passed 256 WASD combination transitions plus all four diagonal cases with other key/mouse events inserted between direction release and tick. Gradle build succeeded.
+- Refreshed preferred APK and installed on tablet, updated engine APK and restarted daemon. This closes the tested event-order gap; the reported intermittent ranked-game diagonal has not been physically reproduced or confirmed fixed.
+
+Rollback of other-touch synchronization (2026-11-19):
+- User reported intermittent stopped/inconsistent movement after the other-touch synchronization change. Removed flushDpadBeforeOtherTouch and its calls; mapped keys and mouse no longer force a partially received WASD combination to commit before its report completes.
+- Keeps continuous direction changes, simultaneous WASD, diagonal editor guides, no stationary/respawn refresh, and limited diagnostics.
+- Standalone checks passed all 256 WASD mask transitions and 500 mixed A/D + mapped Space + mouse transitions while W remained held, asserting exactly one Dpad DOWN and no UP until W release, and no retained lateral axis after release. Gradle build succeeded.
+- Refreshed preferred APK installed and engine restarted on tablet. This rolls back the reported regression; intermittent in-game drift/stopping remains unverified in CODM.
+
+XtMapper WASD replacement (2026-11-19) — supersedes previous Y2E WASD movement notes:
+- Removed Y2E WASD held-direction map, circular diagonal math, interpolation/step scheduler, recenter handling, release timer, radius-shortcut logic and keyboard-report gating from the movement path.
+- Added Java adaptation XtDpadHandler.java derived from Xtr126/XtMapper DpadHandler.kt at 7dca420d870a9df1a35fbc5b482ccc402ebef51b. Preserves upstream four flags, branch priorities, square diagonal offsets, center DOWN/UP coordinates, one touch owner and default 10/20 ms event scheduling. Queue is driven by shell engine tick instead of Android Handler; lifecycle reset clears queued events.
+- Upstream opposite-direction handling is priority/order based, not Y2E's prior neutral cancellation rule. This is intentionally preserved; no claim that all-four combinations cancel.
+- Radius/placement/direction key data remain compatible with saved profiles. Legacy movement tuning fields remain parseable for profile compatibility but are ignored at runtime; removed their controls from WASD properties. Analog gamepad Dpad Stick remains separate.
+- Editor and gameplay WASD guides now show square range/full diagonal endpoints; removed obsolete WASD offset guide. No overlay animation loop added.
+- Bundled XtMapper GPL-3.0 license and attribution in app/src/main/assets/third_party.
+- Build succeeded. Standalone adaptation checks passed eight diagonal/order cases, 10/20ms scheduling, center UP coordinates, remaining-key movement, other-key isolation, reset cancellation. These replace the old Y2E combination semantics checks.
+- Preferred APK rebuilt/installed on tablet, shell engine APK refreshed and daemon restarted. CODM ranked-game behavior has not been manually verified.
+
+XtMapper extensions: opposite-key priority and walking shortcut (2026-11-19):
+- User explicitly requested last-pressed priority, not opposite-key cancellation. Track press order per direction; W-held/S-down selects S, S-up restores W, likewise A/D. Both axes resolve independently.
+- Recompute from the complete held state on transitions and cancel superseded queued moves so an old opposite move cannot execute after a release. Retains XtMapper square diagonals, dedicated pointer and delayed event mechanism. This intentionally modifies the upstream priority/release behavior.
+- Added walking radius shortcut, hold/toggle option and radius offset controls. Uses existing saved shortcut/offset settings; negative offsets shrink the radius. Shortcut transitions update the currently held direction without restarting an active touch. Reset clears held/toggled shortcut state.
+- Editor walking-radius preview restored. Build and Java behavior checks passed: W/S and A/D priority, restoring held opposite, square diagonal, hold/toggle radius and final touch cleanup.
+- Preferred APK rebuilt/installed, engine refreshed and restarted. In-game feel has not been manually verified.
+- Final device checks: installed APK hash matches the engine copied into the active private run directory. Restored overlay app-op after Android had it disabled. Engine behavior checks passed again after installation.

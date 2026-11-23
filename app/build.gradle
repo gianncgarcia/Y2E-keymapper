@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.codex.keymapper'
+    compileSdk 37
+    buildToolsVersion '37.0.0'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        applicationId 'com.codex.keymapper'
+        minSdk 26
+        targetSdk 35
+        versionCode 41
+        versionName '4.19'
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
+}
+
+dependencies {
+    implementation 'com.indidevs.android:adbeesh:0.1.0-beta-2'
+}

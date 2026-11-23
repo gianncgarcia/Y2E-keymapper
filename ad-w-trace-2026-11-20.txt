@@ -1,0 +1,97 @@
+[  132914.669923] /dev/input/event11: EV_KEY       KEY_D                DOWN
+132914701 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+[  132914.879918] /dev/input/event11: EV_KEY       KEY_D                UP
+132914913 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+[  132915.422918] /dev/input/event11: EV_KEY       KEY_D                DOWN
+132915449 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+[  132915.511907] /dev/input/event11: EV_KEY       KEY_D                UP
+132915541 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+[  132916.815904] /dev/input/event11: EV_KEY       KEY_A                DOWN
+132916843 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+[  132917.328069] /dev/input/event11: EV_KEY       KEY_A                UP
+132917360 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+[  132917.935961] /dev/input/event11: EV_KEY       KEY_A                DOWN
+132917962 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+[  132918.422893] /dev/input/event11: EV_KEY       KEY_W                UP
+132918452 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+[  132919.297898] /dev/input/event11: EV_KEY       KEY_W                DOWN
+132919326 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+[  132919.365902] /dev/input/event11: EV_KEY       KEY_A                UP
+[  132919.391969] /dev/input/event11: EV_KEY       KEY_A                DOWN
+132919395 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+[  132919.582937] /dev/input/event11: EV_KEY       KEY_A                UP
+132919611 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+[  132919.870896] /dev/input/event11: EV_KEY       KEY_A                DOWN
+132919897 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+[  132920.019930] /dev/input/event11: EV_KEY       KEY_A                UP
+132920047 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+[  132920.179916] /dev/input/event11: EV_KEY       KEY_D                DOWN
+132920213 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+[  132920.378907] /dev/input/event11: EV_KEY       KEY_A                DOWN
+[  132920.400883] /dev/input/event11: EV_KEY       KEY_D                UP
+132920406 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+[  132920.424909] /dev/input/event11: EV_KEY       KEY_W                UP
+132920454 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+[  132920.709906] /dev/input/event11: EV_KEY       KEY_S                DOWN
+132920737 TOUCH xtmapper held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
+[  132921.018957] /dev/input/event11: EV_KEY       KEY_S                UP
+132921046 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+[  132921.550907] /dev/input/event11: EV_KEY       KEY_S                DOWN
+132921584 TOUCH xtmapper held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
+[  132921.724918] /dev/input/event11: EV_KEY       KEY_A                UP
+132921758 TOUCH xtmapper held=[false, true, false, false] touch=true current=484.71973,1458.0297 pending=0
+[  132921.953913] /dev/input/event11: EV_KEY       KEY_A                DOWN
+132921986 TOUCH xtmapper held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
+[  132922.123919] /dev/input/event11: EV_KEY       KEY_S                UP
+[  132922.141900] /dev/input/event11: EV_KEY       KEY_A                UP
+132922149 TOUCH xtmapper held=[false, false, false, false] touch=false current=325.03973,1458.0297 pending=0
+[  132931.664997] /dev/input/event11: EV_KEY       KEY_D                DOWN
+132931672 TOUCH xtmapper held=[false, false, false, true] touch=true current=484.71973,1298.3496 pending=1
+132931696 TOUCH xtmapper held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
+[  132932.023921] /dev/input/event11: EV_KEY       KEY_D                UP
+132932027 TOUCH xtmapper held=[false, false, false, false] touch=false current=644.3997,1298.3496 pending=0
+[  132932.719899] /dev/input/event11: EV_KEY       KEY_A                DOWN
+132932758 TOUCH xtmapper held=[false, false, true, false] touch=true current=484.71973,1298.3496 pending=1
+132932770 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+[  132932.863005] /dev/input/event11: EV_KEY       KEY_A                UP
+132932867 TOUCH xtmapper held=[false, false, false, false] touch=false current=325.03973,1298.3496 pending=0
+[  132934.795893] /dev/input/event11: EV_KEY       KEY_W                DOWN
+132934797 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1298.3496 pending=1
+132934822 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+[  132935.254017] /dev/input/event11: EV_KEY       KEY_D                DOWN
+132935285 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+[  132935.589068] /dev/input/event11: EV_KEY       KEY_D                UP
+[  132935.610912] /dev/input/event11: EV_KEY       KEY_A                DOWN
+132935618 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+[  132936.013906] /dev/input/event11: EV_KEY       KEY_A                UP
+132936043 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+[  132936.063988] /dev/input/event11: EV_KEY       KEY_W                UP
+132936067 TOUCH xtmapper held=[false, false, false, false] touch=false current=484.71973,1138.6696 pending=0
+[  132936.158939] /dev/input/event11: EV_KEY       KEY_W                DOWN
+[  132936.158939] /dev/input/event11: EV_KEY       KEY_D                DOWN
+132936160 TOUCH xtmapper held=[true, false, false, true] touch=true current=484.71973,1298.3496 pending=1
+132936190 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+[  132936.347918] /dev/input/event11: EV_KEY       KEY_D                UP
+132936376 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+[  132936.608014] /dev/input/event11: EV_KEY       KEY_A                DOWN
+132936634 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+[  132937.504994] /dev/input/event11: EV_KEY       KEY_W                UP
+132937534 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+[  132937.808104] /dev/input/event11: EV_KEY       KEY_S                DOWN
+132937837 TOUCH xtmapper held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
+[  132938.151002] /dev/input/event11: EV_KEY       KEY_D                DOWN
+[  132938.178936] /dev/input/event11: EV_KEY       KEY_A                UP
+132938181 TOUCH xtmapper held=[false, true, false, true] touch=true current=644.3997,1458.0297 pending=0
+[  132938.383069] /dev/input/event11: EV_KEY       KEY_S                UP
+132938413 TOUCH xtmapper held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
+[  132938.660940] /dev/input/event11: EV_KEY       KEY_S                DOWN
+132938688 TOUCH xtmapper held=[false, true, false, true] touch=true current=644.3997,1458.0297 pending=0
+[  132938.730900] /dev/input/event11: EV_KEY       KEY_A                DOWN
+[  132938.740928] /dev/input/event11: EV_KEY       KEY_D                UP
+132938762 TOUCH xtmapper held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
+[  132938.768899] /dev/input/event11: EV_KEY       KEY_S                UP
+132938795 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+[  132939.524916] /dev/input/event11: EV_KEY       KEY_A                UP
+132939526 TOUCH xtmapper held=[false, false, false, false] touch=false current=325.03973,1298.3496 pending=0
+133040324 TOUCH xtmapper inactive
+xtmapper inactive

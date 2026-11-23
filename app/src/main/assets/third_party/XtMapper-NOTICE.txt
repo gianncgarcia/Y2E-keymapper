@@ -1,0 +1,12 @@
+XtDpadHandler.java is adapted from Xtr126/XtMapper DpadHandler.kt.
+Source: https://github.com/Xtr126/XtMapper/blob/7dca420d870a9df1a35fbc5b482ccc402ebef51b/app/src/main/java/xtr/keymapper/dpad/DpadHandler.kt
+Copyright: XtMapper contributors; see upstream CREDITS.md and source history.
+License: GNU General Public License version 3, included in XtMapper-GPL-3.0.txt.
+Modified 2026-11-19 for Java shell-engine scheduling, lifecycle reset, last-pressed opposite-key priority, walking radius, superseded-target coalescing, immediate lifecycle events and screen bounds.
+This derivative retains square directional positions and dedicated pointer ownership; its scheduling and opposite-key behavior intentionally differ from upstream.
+
+Further modifications: bounded linear direction transitions using the configured duration; final UP uses the last injected position instead of relocating to center.
+
+Movement tuning additions: adjustable diagonal angle, movement frequency, deterministic midpoint step-length range; mouse processing rates are independent of hardware polling.
+
+Circular movement update: normalize diagonal endpoints to the configured radius and interpolate radius/shortest angle instead of cutting through the center. W-specific exemption removed.
