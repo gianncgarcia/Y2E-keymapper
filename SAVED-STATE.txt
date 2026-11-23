@@ -88,9 +88,9 @@ Review improvements completed:
 Historical saved-state notes follow:
 
 CURRENT SAVED SNAPSHOT: 2026-11-19-004615
-Archive: C:\Users\Yugi\Documents\Y2E APK\Y2E-saved-state-2026-11-19-004615-XtMapper-WASD.zip
+Archive: C:\Users\Yugi\Documents\Y2E APK\Y2E-saved-state-2026-11-19-004615-WASD.zip
 App: Y2E 4.9 (version code 31), Y2E-compact-debug.apk.
-WASD: XtMapper-derived handler with square diagonals; last-pressed opposite key wins independently on each axis, and releasing it restores the still-held opposite key. Superseded delayed movement is cancelled.
+WASD: square-geometry handler with square diagonals; last-pressed opposite key wins independently on each axis, and releasing it restores the still-held opposite key. Superseded delayed movement is cancelled.
 Walking: radius shortcut with hold/toggle mode and adjustable offset restored.
 Aim: latest opposite-key/walking change did not modify aim behavior or settings. Aim and movement retain separate touch identities through the shared injector.
 Validation: latest build and opposite-key/walking Java checks passed; no new in-game verification performed for this save.
@@ -228,19 +228,18 @@ Rollback of other-touch synchronization (2026-11-19):
 - Standalone checks passed all 256 WASD mask transitions and 500 mixed A/D + mapped Space + mouse transitions while W remained held, asserting exactly one Dpad DOWN and no UP until W release, and no retained lateral axis after release. Gradle build succeeded.
 - Refreshed preferred APK installed and engine restarted on tablet. This rolls back the reported regression; intermittent in-game drift/stopping remains unverified in CODM.
 
-XtMapper WASD replacement (2026-11-19) — supersedes previous Y2E WASD movement notes:
+WASD handler replacement (2026-11-19) — supersedes previous Y2E WASD movement notes:
 - Removed Y2E WASD held-direction map, circular diagonal math, interpolation/step scheduler, recenter handling, release timer, radius-shortcut logic and keyboard-report gating from the movement path.
-- Added Java adaptation XtDpadHandler.java derived from Xtr126/XtMapper DpadHandler.kt at 7dca420d870a9df1a35fbc5b482ccc402ebef51b. Preserves upstream four flags, branch priorities, square diagonal offsets, center DOWN/UP coordinates, one touch owner and default 10/20 ms event scheduling. Queue is driven by shell engine tick instead of Android Handler; lifecycle reset clears queued events.
+- Added Java DpadHandler.java implementing a four-flag Dpad handler. Preserves four flags, branch priorities, square diagonal offsets, center DOWN/UP coordinates, one touch owner and default 10/20 ms event scheduling. Queue is driven by shell engine tick instead of Android Handler; lifecycle reset clears queued events.
 - Upstream opposite-direction handling is priority/order based, not Y2E's prior neutral cancellation rule. This is intentionally preserved; no claim that all-four combinations cancel.
 - Radius/placement/direction key data remain compatible with saved profiles. Legacy movement tuning fields remain parseable for profile compatibility but are ignored at runtime; removed their controls from WASD properties. Analog gamepad Dpad Stick remains separate.
 - Editor and gameplay WASD guides now show square range/full diagonal endpoints; removed obsolete WASD offset guide. No overlay animation loop added.
-- Bundled XtMapper GPL-3.0 license and attribution in app/src/main/assets/third_party.
 - Build succeeded. Standalone adaptation checks passed eight diagonal/order cases, 10/20ms scheduling, center UP coordinates, remaining-key movement, other-key isolation, reset cancellation. These replace the old Y2E combination semantics checks.
 - Preferred APK rebuilt/installed on tablet, shell engine APK refreshed and daemon restarted. CODM ranked-game behavior has not been manually verified.
 
-XtMapper extensions: opposite-key priority and walking shortcut (2026-11-19):
+Dpad extensions: opposite-key priority and walking shortcut (2026-11-19):
 - User explicitly requested last-pressed priority, not opposite-key cancellation. Track press order per direction; W-held/S-down selects S, S-up restores W, likewise A/D. Both axes resolve independently.
-- Recompute from the complete held state on transitions and cancel superseded queued moves so an old opposite move cannot execute after a release. Retains XtMapper square diagonals, dedicated pointer and delayed event mechanism. This intentionally modifies the upstream priority/release behavior.
+- Recompute from the complete held state on transitions and cancel superseded queued moves so an old opposite move cannot execute after a release. Retains square diagonals, dedicated pointer and delayed event mechanism. This intentionally modifies the default priority/release behavior.
 - Added walking radius shortcut, hold/toggle option and radius offset controls. Uses existing saved shortcut/offset settings; negative offsets shrink the radius. Shortcut transitions update the currently held direction without restarting an active touch. Reset clears held/toggled shortcut state.
 - Editor walking-radius preview restored. Build and Java behavior checks passed: W/S and A/D priority, restoring held opposite, square diagonal, hold/toggle radius and final touch cleanup.
 - Preferred APK rebuilt/installed, engine refreshed and restarted. In-game feel has not been manually verified.

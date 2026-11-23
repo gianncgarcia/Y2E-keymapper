@@ -1,15 +1,12 @@
 /*
- * Java adaptation of Xtr126/XtMapper DpadHandler.kt
- * Upstream: https://github.com/Xtr126/XtMapper
- * Revision: 7dca420d870a9df1a35fbc5b482ccc402ebef51b
- * Copyright XtMapper contributors. GNU GPL version 3; see bundled license.
- * Adaptations: shell-engine scheduling, complete held-state/opposite-key
- * resolution, superseded-event cancellation and walking-radius shortcut.
+ * Virtual joystick direction handler: shell-engine scheduling, complete
+ * held-state/opposite-key resolution, superseded-event cancellation and
+ * walking-radius shortcut.
  */
 package com.codex.keymapper.engine;
 
-/** XtMapper-derived circular joystick with bounded continuous direction drags. */
-final class XtDpadHandler {
+/** Circular joystick with bounded continuous direction drags. */
+final class DpadHandler {
     private final PointerEngine.Touch touch;
     private final String[] keys;
     private final long[] pressOrder = new long[4];
@@ -35,7 +32,7 @@ final class XtDpadHandler {
     private float currentX, currentY;
     private boolean touching;
 
-    XtDpadHandler(PointerEngine.Touch touch, PointerEngine.Dpad dpad, int width, int height) {
+    DpadHandler(PointerEngine.Touch touch, PointerEngine.Dpad dpad, int width, int height) {
         this.touch=touch; this.width=width; this.height=height;
         keys=new String[]{dpad.up,dpad.down,dpad.left,dpad.right};
         centerX=clamp(dpad.center.x*width,width); centerY=clamp(dpad.center.y*height,height);
@@ -152,6 +149,6 @@ final class XtDpadHandler {
         touching=false;radiusHeld=false;radiusToggled=false;revision++;
     }
     long revision(){return revision;}
-    String diagnosticState(){return "xtmapper held="+java.util.Arrays.toString(held)+" touch="+touching
+    String diagnosticState(){return "dpad held="+java.util.Arrays.toString(held)+" touch="+touching
             +" current="+currentX+","+currentY+" center="+centerX+","+centerY+" target="+targetX+","+targetY+" moving="+moving;}
 }

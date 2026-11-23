@@ -1,97 +1,97 @@
 [   84494.599835] /dev/input/event11: EV_KEY       KEY_S                UP
-84494614 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+84494614 TOUCH dpad held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
 [   84494.741784] /dev/input/event11: EV_KEY       KEY_W                DOWN
-84494757 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84494757 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84494.908788] /dev/input/event11: EV_KEY       KEY_A                UP
-84494922 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+84494922 TOUCH dpad held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
 [   84496.509821] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84496526 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84496526 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84496.531850] /dev/input/event11: EV_KEY       KEY_W                UP
-84496553 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+84496553 TOUCH dpad held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
 [   84496.901863] /dev/input/event11: EV_KEY       KEY_S                DOWN
-84496919 TOUCH xtmapper held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
+84496919 TOUCH dpad held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
 [   84497.076865] /dev/input/event11: EV_KEY       KEY_A                UP
-84497092 TOUCH xtmapper held=[false, true, false, false] touch=true current=484.71973,1458.0297 pending=0
+84497092 TOUCH dpad held=[false, true, false, false] touch=true current=484.71973,1458.0297 pending=0
 [   84497.185795] /dev/input/event11: EV_KEY       KEY_D                DOWN
-84497199 TOUCH xtmapper held=[false, true, false, true] touch=true current=644.3997,1458.0297 pending=0
+84497199 TOUCH dpad held=[false, true, false, true] touch=true current=644.3997,1458.0297 pending=0
 [   84497.307804] /dev/input/event11: EV_KEY       KEY_S                UP
-84497318 TOUCH xtmapper held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
+84497318 TOUCH dpad held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
 [   84497.596825] /dev/input/event11: EV_KEY       KEY_W                DOWN
-84497614 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+84497614 TOUCH dpad held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
 [   84497.690969] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84497707 TOUCH xtmapper held=[true, false, true, true] touch=true current=325.03973,1138.6696 pending=0
+84497707 TOUCH dpad held=[true, false, true, true] touch=true current=325.03973,1138.6696 pending=0
 [   84497.750803] /dev/input/event11: EV_KEY       KEY_D                UP
 [   84497.766790] /dev/input/event11: EV_KEY       KEY_W                UP
-84497768 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+84497768 TOUCH dpad held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
 [   84497.965957] /dev/input/event11: EV_KEY       KEY_W                DOWN
-84497981 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84497981 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84498.379855] /dev/input/event11: EV_KEY       KEY_A                UP
-84498393 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+84498393 TOUCH dpad held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
 [   84498.892790] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84498908 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84498908 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84499.061799] /dev/input/event11: EV_KEY       KEY_A                UP
-84499074 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+84499074 TOUCH dpad held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
 [   84499.751805] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84499766 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84499766 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84499.871963] /dev/input/event11: EV_KEY       KEY_W                UP
-84499886 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+84499886 TOUCH dpad held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
 [   84500.116798] /dev/input/event11: EV_KEY       KEY_D                DOWN
-84500131 TOUCH xtmapper held=[false, false, true, true] touch=true current=644.3997,1298.3496 pending=0
+84500131 TOUCH dpad held=[false, false, true, true] touch=true current=644.3997,1298.3496 pending=0
 [   84500.154833] /dev/input/event11: EV_KEY       KEY_A                UP
-84500166 TOUCH xtmapper held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
+84500166 TOUCH dpad held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
 [   84500.450985] /dev/input/event11: EV_KEY       KEY_W                DOWN
-84500464 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+84500464 TOUCH dpad held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
 [   84500.560900] /dev/input/event11: EV_KEY       KEY_D                UP
-84500574 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+84500574 TOUCH dpad held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
 [   84500.654876] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84500666 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84500666 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84500.796895] /dev/input/event11: EV_KEY       KEY_A                UP
 [   84500.796895] /dev/input/event11: EV_KEY       KEY_D                DOWN
-84500809 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+84500809 TOUCH dpad held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
 [   84500.949001] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84500962 TOUCH xtmapper held=[true, false, true, true] touch=true current=325.03973,1138.6696 pending=0
+84500962 TOUCH dpad held=[true, false, true, true] touch=true current=325.03973,1138.6696 pending=0
 [   84500.979069] /dev/input/event11: EV_KEY       KEY_D                UP
-84500997 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84500997 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84501.057814] /dev/input/event11: EV_KEY       KEY_W                UP
-84501072 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+84501072 TOUCH dpad held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
 [   84501.327795] /dev/input/event11: EV_KEY       KEY_S                DOWN
-84501341 TOUCH xtmapper held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
+84501341 TOUCH dpad held=[false, true, true, false] touch=true current=325.03973,1458.0297 pending=0
 [   84501.398924] /dev/input/event11: EV_KEY       KEY_D                DOWN
 [   84501.405032] /dev/input/event11: EV_KEY       KEY_A                UP
-84501414 TOUCH xtmapper held=[false, true, false, true] touch=true current=644.3997,1458.0297 pending=0
+84501414 TOUCH dpad held=[false, true, false, true] touch=true current=644.3997,1458.0297 pending=0
 [   84501.494787] /dev/input/event11: EV_KEY       KEY_S                UP
-84501509 TOUCH xtmapper held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
+84501509 TOUCH dpad held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
 [   84501.663849] /dev/input/event11: EV_KEY       KEY_W                DOWN
-84501677 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+84501677 TOUCH dpad held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
 [   84501.741814] /dev/input/event11: EV_KEY       KEY_D                UP
-84501758 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+84501758 TOUCH dpad held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
 [   84501.897822] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84501912 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84501912 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84502.684905] /dev/input/event11: EV_KEY       KEY_W                UP
 [   84502.690973] /dev/input/event11: EV_KEY       KEY_D                DOWN
-84502695 TOUCH xtmapper held=[false, false, true, true] touch=true current=644.3997,1298.3496 pending=0
+84502695 TOUCH dpad held=[false, false, true, true] touch=true current=644.3997,1298.3496 pending=0
 [   84502.728872] /dev/input/event11: EV_KEY       KEY_A                UP
-84502741 TOUCH xtmapper held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
+84502741 TOUCH dpad held=[false, false, false, true] touch=true current=644.3997,1298.3496 pending=0
 [   84503.131013] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84503144 TOUCH xtmapper held=[false, false, true, true] touch=true current=325.03973,1298.3496 pending=0
+84503144 TOUCH dpad held=[false, false, true, true] touch=true current=325.03973,1298.3496 pending=0
 [   84503.156892] /dev/input/event11: EV_KEY       KEY_D                UP
-84503172 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+84503172 TOUCH dpad held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
 [   84503.316814] /dev/input/event11: EV_KEY       KEY_W                DOWN
-84503328 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84503328 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84503.394789] /dev/input/event11: EV_KEY       KEY_A                UP
-84503408 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+84503408 TOUCH dpad held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
 [   84503.839901] /dev/input/event11: EV_KEY       KEY_A                DOWN
-84503853 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84503853 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84503.884908] /dev/input/event11: EV_KEY       KEY_W                UP
-84503900 TOUCH xtmapper held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
+84503900 TOUCH dpad held=[false, false, true, false] touch=true current=325.03973,1298.3496 pending=0
 [   84504.438791] /dev/input/event11: EV_KEY       KEY_W                DOWN
-84504455 TOUCH xtmapper held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
+84504455 TOUCH dpad held=[true, false, true, false] touch=true current=325.03973,1138.6696 pending=0
 [   84504.534794] /dev/input/event11: EV_KEY       KEY_A                UP
-84504545 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+84504545 TOUCH dpad held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
 [   84504.729796] /dev/input/event11: EV_KEY       KEY_D                DOWN
-84504745 TOUCH xtmapper held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
+84504745 TOUCH dpad held=[true, false, false, true] touch=true current=644.3997,1138.6696 pending=0
 [   84504.964811] /dev/input/event11: EV_KEY       KEY_D                UP
-84504977 TOUCH xtmapper held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
+84504977 TOUCH dpad held=[true, false, false, false] touch=true current=484.71973,1138.6696 pending=0
 [   84506.781823] /dev/input/event11: EV_KEY       KEY_W                UP
-84506785 TOUCH xtmapper held=[false, false, false, false] touch=false current=484.71973,1138.6696 pending=0
-xtmapper held=[false, false, false, false] touch=false current=484.71973,1138.6696 pending=0
+84506785 TOUCH dpad held=[false, false, false, false] touch=false current=484.71973,1138.6696 pending=0
+dpad held=[false, false, false, false] touch=false current=484.71973,1138.6696 pending=0

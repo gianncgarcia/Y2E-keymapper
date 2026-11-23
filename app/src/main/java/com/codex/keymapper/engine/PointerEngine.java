@@ -42,7 +42,7 @@ public final class PointerEngine {
         public final boolean holdToChange;
         public final String up, down, left, right, changeRadiusKey;
         // Accept the legacy wire format so existing profiles retain placement,
-        // radius and keys. XtMapper has no legacy movement-tuning parameters.
+        // radius and keys. Legacy movement-tuning fields are ignored at runtime.
         Dpad(Point center, float radius, int releaseDelayMs, String up, String down, String left, String right,
              String changeRadiusKey, float radiusOffset, boolean holdToChange, float angle, int frequency, float stepLength) {
             this.center = center; this.radius = Math.max(0.02f, Math.min(0.45f, radius));
@@ -73,7 +73,7 @@ public final class PointerEngine {
     private final Touch touch;
     private Profile profile;
     private final Set<String> pressed = new HashSet<>(), drags = new HashSet<>(), aimHeld = new HashSet<>();
-    private XtDpadHandler xtDpad;
+    private DpadHandler dpadHandler;
     private final Map<String, float[]> stickAxes = new HashMap<>(), stickPositions = new HashMap<>();
     private final Map<String, Long> stickReleaseAt = new HashMap<>(), stickLastUpdate = new HashMap<>();
     private final Set<String> stickPointers = new HashSet<>(), radiusHeldKeys = new HashSet<>();
@@ -92,8 +92,8 @@ public final class PointerEngine {
     public void configure(Profile profile, int width, int height) {
         reset(); this.profile = profile; this.width = Math.max(1, width); this.height = Math.max(1, height);
         cursorX = width / 2f; cursorY = height / 2f;
-        xtDpad = profile == null || profile.dpad == null ? null
-                : new XtDpadHandler(touch, profile.dpad, this.width, this.height);
+        dpadHandler = profile == null || profile.dpad == null ? null
+                : new DpadHandler(touch, profile.dpad, this.width, this.height);
     }
     public void pause(boolean value) { if (value != paused) { reset(); paused = value; } }
     public void setKeyboardMode(boolean value) {
@@ -103,7 +103,7 @@ public final class PointerEngine {
     }
     public void reset() {
         touch.cancel(); pressed.clear(); drags.clear(); aimHeld.clear(); hotkeyModifierDown.clear();
-        if (xtDpad != null) xtDpad.reset();
+        if (dpadHandler != null) dpadHandler.reset();
         stickAxes.clear(); stickPositions.clear(); stickReleaseAt.clear(); stickLastUpdate.clear();
         stickPointers.clear(); radiusHeldKeys.clear(); radiusToggled = false;
         aimOn = false; aimDown = false; overlayTogglePending = false;
@@ -111,10 +111,10 @@ public final class PointerEngine {
     }
     public boolean aimOn() { return aimOn; }
     public boolean isDpadKey(String key) {
-        return xtDpad != null && xtDpad.handles(normalize(key));
+        return dpadHandler != null && dpadHandler.handles(normalize(key));
     }
-    public String dpadDiagnosticState() { return xtDpad == null ? "xtmapper inactive" : xtDpad.diagnosticState(); }
-    public long dpadRevision() { return xtDpad == null ? -1 : xtDpad.revision(); }
+    public String dpadDiagnosticState() { return dpadHandler == null ? "dpad inactive" : dpadHandler.diagnosticState(); }
+    public long dpadRevision() { return dpadHandler == null ? -1 : dpadHandler.revision(); }
     public void setOverlayHotkey(String modifier, String key) {
         toggleModifier = modifier == null ? "" : normalize(modifier);
         toggleKey = key == null ? "" : normalize(key);
@@ -153,12 +153,12 @@ public final class PointerEngine {
             if (down) hotkeyModifierDown.add(id); else hotkeyModifierDown.remove(id);
         }
 
-        if (!keyboardMode && xtDpad != null && xtDpad.handles(key)) {
-            if (!repeat) xtDpad.key(key, down, now);
+        if (!keyboardMode && dpadHandler != null && dpadHandler.handles(key)) {
+            if (!repeat) dpadHandler.key(key, down, now);
             return;
         }
 
-        if (!keyboardMode && xtDpad != null && xtDpad.radiusKey(key, down, now, repeat)) return;
+        if (!keyboardMode && dpadHandler != null && dpadHandler.radiusKey(key, down, now, repeat)) return;
         if (repeat) return;
         if (down ? !pressed.add(id) : !pressed.remove(id)) return;
 
@@ -374,7 +374,7 @@ public final class PointerEngine {
         if (target != null) { String id = device + ":wheel"; touch.down(id, target.x * width, target.y * height); touch.up(id); }
     }
     public void tick(long now) {
-        if (xtDpad != null) xtDpad.tick(now);
+        if (dpadHandler != null) dpadHandler.tick(now);
         drainBoundaryAim();
         Iterator<Map.Entry<String, Long>> it = stickReleaseAt.entrySet().iterator();
         while (it.hasNext()) {

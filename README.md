@@ -4,12 +4,6 @@ Y2E (project name **KeyMapper**, package `com.codex.keymapper`) is an Android ke
 
 Current build: **Y2E 4.19** (versionCode 41, daemon protocol 19). See [`SAVED-STATE.txt`](SAVED-STATE.txt) for the full development and release history.
 
-## Attribution
-
-The WASD (Dpad) handling is adapted from **[XtMapper](https://github.com/Xtr126/XtMapper)** by Xtr126 (`DpadHandler.kt` at commit `7dca420d870a9df1a35fbc5b482ccc402ebef51b`), which is licensed under **GPL-3.0**. Accordingly, this entire project is licensed under GPL-3.0 (see [`LICENSE`](LICENSE)). XtMapper's license and notice are bundled in the app at `app/src/main/assets/third_party/`.
-
-Y2E intentionally modifies upstream behavior in places: last-pressed opposite-key priority (instead of XtMapper's priority/order rule), a walking-radius shortcut, and queue driving from the shell-engine tick instead of an Android `Handler`.
-
 ## How it works
 
 Y2E is split into two cooperating processes, because the normal app has no privilege to inject touches — only the ADB shell user does.
@@ -68,7 +62,7 @@ Each mapped key owns an **independent touch pointer** at its configured screen c
 
 ### WASD / Dpad (the joystick emulator)
 - A single virtual-stick pointer starts at the joystick center (`DOWN`), holds ~12 ms, then moves toward the combined direction of all held keys.
-- Direction combination follows XtMapper's **square geometry**: diagonals use full square offsets, and upstream branch priorities are preserved.
+- Direction combination uses **square geometry**: diagonals use full square offsets with fixed branch priorities.
 - Y2E extension: **last-pressed opposite key wins independently per axis** (W held + S pressed → S; S released → W resumes). Queued moves superseded by a release are cancelled so an old move cannot execute late.
 - **Walking radius shortcut**: a hotkey switches the stick to a smaller/larger radius (hold or toggle, with offset); transitions update the held direction without restarting the touch.
 - Configurable per profile: center, radius, release delay (0–50 ms), direction-key assignment.
@@ -97,7 +91,7 @@ gradle assembleDebug
 ## Installing / updating on a device
 
 1. Pair and connect over wireless ADB (the app guides this; `WirelessActivation.kt` handles mDNS pairing).
-2. Install `Y2E-compact-debug.apk` (the preferred build, included in this repo; 15 MB).
+2. Build and install the APK (`gradle assembleDebug` → `app/build/outputs/apk/debug/app-debug.apk`).
 3. Activation extracts the controller and engine from the installed APK into a private, shell-owned directory; the daemon loads the engine from the installed APK, not the mutable copy.
 4. After changing daemon code: refresh `y2e-engine.apk` and restart `daemon_control.sh` — installing a new APK alone does not restart the running daemon.
 
@@ -117,13 +111,11 @@ gradle assembleDebug
 
 ```
 app/src/main/java/com/codex/keymapper/          App side (overlay service, editor, profiles, activation)
-app/src/main/java/com/codex/keymapper/engine/   Daemon side (EngineMain, PointerEngine, AndroidTouch, XtDpadHandler)
-app/src/main/assets/third_party/                XtMapper GPL-3.0 license + notice
+app/src/main/java/com/codex/keymapper/engine/   Daemon side (EngineMain, PointerEngine, AndroidTouch, DpadHandler)
 checks/                                          Regression runner + standalone Java checks
 SAVED-STATE.txt                                  Full version history and design decisions
-Y2E-compact-debug.apk                            Preferred debug build (4.19)
 ```
 
 ## License
 
-GPL-3.0 — see [`LICENSE`](LICENSE) and `app/src/main/assets/third_party/`. If you distribute builds of Y2E, you must make the corresponding source available under the same license.
+GPL-3.0 — see [`LICENSE`](LICENSE). If you distribute builds of Y2E, you must make the corresponding source available under the same license.
